@@ -12,8 +12,8 @@ dimensions_left = {'left': 810, 'top': 550, 'width': 240, 'height': 300}
 dimensions_right = {'left': 1150, 'top': 550, 'width': 240, 'height': 300}
 dimensions_left = {'left': 800, 'top': 400, 'width': 350, 'height': 500}
 dimensions_right = {'left': 1100, 'top': 400, 'width': 350, 'height': 500}
-dimensions_left = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
-dimensions_right = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
+# dimensions_left = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
+# dimensions_right = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
 sct = mss.mss()
 
 if left:

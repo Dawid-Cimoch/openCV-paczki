@@ -21,15 +21,18 @@ sct = mss.mss()
 dimensions_left = {'left': 800, 'top': 400, 'width': 350, 'height': 500}
 dimensions_right = {'left': 1100, 'top': 400, 'width': 350, 'height': 500}
 
-dimensions_left = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
-dimensions_right = {'left': 800, 'top': 660, 'width': 600, 'height': 200}
+dimensions_left = {'left': 800, 'top': 450, 'width': 350, 'height': 500}
+dimensions_right = {'left': 1100, 'top': 450, 'width': 350, 'height': 500}
 
-pack_left = cv2.imread('data/left_temp.jpg')
+pack_left = cv2.imread('data/left_pack.jpg')
 
-pack_right = cv2.imread('data/right_tempjpg.jpg')
+pack_right = cv2.imread('data/right_pack.jpg')
 w = pack_left.shape[1]
 h = pack_left.shape[0]
 
+end_game = cv2.imread('data/end_game.jpg')
+width_end_game = end_game.shape[1]
+high_end_game = end_game.shape[0]
 fps_time = time()
 cnt=1
 while True:
@@ -48,11 +51,13 @@ while True:
     #     img.show()  # Show the image using the default image viewer
     # cv2.imshow('a crop of the screen', scr_remove)
     result = cv2.matchTemplate(scr_remove, wood, cv2.TM_CCOEFF_NORMED)
+    result_of_end_game = cv2.matchTemplate(scr_remove, end_game, cv2.TM_CCOEFF_NORMED)
 
     _, max_val, _, max_loc = cv2.minMaxLoc(result)
+    _end_game, max_val_end_game, _end_game, max_loc_end_game = cv2.minMaxLoc(result_of_end_game)
     print(f"Max Val: {max_val} Max Loc: {max_loc}")
     src = scr.copy()
-    if max_val > .50:
+    if max_val > .40:
         left = not left
         if left:
             x=850
@@ -60,13 +65,15 @@ while True:
             x=1200
         cv2.rectangle(scr, max_loc, (max_loc[0] + w, max_loc[1] + h), (0,255,255), 2)
 
+    if max_val_end_game> .70:
+        break
     cv2.imshow('Screen Shot', scr)
     cv2.imwrite(f'data\output{cnt}.jpg', scr_remove)    
     cnt+=1
     cv2.imwrite('data\output_wood.jpg', wood)    
     cv2.waitKey(1)
     pyautogui.click(x=x, y=y)
-    sleep(.10)
+    sleep(.092) #0.88 was to 135
     if keyboard.is_pressed('q'):
         break
 
